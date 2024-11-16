@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, WritableSignal , Signal } from '@angular/core';
 import { Todo } from '../model/todo';
 import { TodoService } from '../service/todo.service';
-import { signal} from "@angular/core";
+import { signal , computed } from "@angular/core";
 import { FormsModule } from '@angular/forms';
 import {TodoStatus} from "../model/todoStatus";
 
@@ -17,17 +17,18 @@ export class TodoComponent {
 
   numberOfTodos = 0;
   todo = new Todo();
-  todos = signal<Todo[]>([]);
+  todos : WritableSignal<Todo[]> = signal<Todo[]>([]);
   status : string = '';
 
   // Derived Signals
-  waitingTodos = signal(() => this.todos().filter(todo => todo.status === 'waiting'));
-  inProgressTodos = signal(() => this.todos().filter(todo => todo.status === 'in progress'));
-  doneTodos = signal(() => this.todos().filter(todo => todo.status === 'done'));
+  waitingTodos: Signal<Todo[]> = computed(() => this.todos().filter(todo => todo.status === 'waiting'));
+  inProgressTodos: Signal<Todo[]> = computed(() => this.todos().filter(todo => todo.status === 'in progress'));
+  doneTodos: Signal<Todo[]> = computed(() => this.todos().filter(todo => todo.status === 'done'));
 
   addTodo() {
     this.todo.id = this.numberOfTodos ;
     this.numberOfTodos ++ ;
+    this.todo.status = "waiting" ;
     this.todos.update(todos => [...todos, this.todo]);
     this.todo = new Todo() ;
   }
