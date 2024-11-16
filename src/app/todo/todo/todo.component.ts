@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Todo } from '../model/todo';
 import { TodoService } from '../service/todo.service';
-
+import { signal} from "@angular/core";
 import { FormsModule } from '@angular/forms';
+import {TodoStatus} from "../model/todoStatus";
 
 @Component({
     selector: 'app-todo',
@@ -13,22 +14,48 @@ import { FormsModule } from '@angular/forms';
     imports: [FormsModule],
 })
 export class TodoComponent {
-  private todoService = inject(TodoService);
 
-  todos: Todo[] = [];
+  numberOfTodos = 0;
   todo = new Todo();
+  todos = signal<Todo[]>([]);
+  status : string = '';
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-  constructor() {
-    this.todos = this.todoService.getTodos();
-  }
+  // Derived Signals
+  waitingTodos = signal(() => this.todos().filter(todo => todo.status === 'waiting'));
+  inProgressTodos = signal(() => this.todos().filter(todo => todo.status === 'in progress'));
+  doneTodos = signal(() => this.todos().filter(todo => todo.status === 'done'));
+
   addTodo() {
-    this.todoService.addTodo(this.todo);
-    this.todo = new Todo();
+    this.todo.id = this.numberOfTodos ;
+    this.numberOfTodos ++ ;
+    this.todos.update(todos => [...todos, this.todo]);
+    this.todo = new Todo() ;
   }
 
-  deleteTodo(todo: Todo) {
-    this.todoService.deleteTodo(todo);
+  modifyStatus(todoId: number , newStatus: string) {
+    console.log(todoId);
+    let status : TodoStatus  = 'waiting' ;
+    if (newStatus == "in progress") {
+      status = "in progress";
+    }else{
+      if (newStatus == "done") {
+        status = "done";
+      }
+    }
+    console.log(status);
+    this.todos.update(todos => todos.map(todo => {
+      if (todo.id === todoId) {
+        this.status = "";
+        return { ...todo, status };
+      }
+      this.status = "";
+      return todo;
+    }));
+    console.log(this.todos());
   }
+
+  deleteTodo(todoId: number) {
+    this.todos.update(todos => todos.filter(todo => todo.id !== todoId));
+  }
+
 }

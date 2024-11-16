@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Todo } from '../model/todo';
 import { LoggerService } from '../../services/logger.service';
+import {TodoStatus} from "../model/todoStatus";
 
 let n = 1;
 
@@ -55,5 +56,15 @@ export class TodoService {
    */
   logTodos() {
     this.loggerService.logger(this.todos);
+  }
+
+
+  modifyTodoStatus(todo: Todo ,status: TodoStatus): boolean {
+    const index = this.todos.indexOf(todo);
+    if (index > -1) {
+      this.todos[index].status = status;
+      return true;
+    }
+    return false;
   }
 }
