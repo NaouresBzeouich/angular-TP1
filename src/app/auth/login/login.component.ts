@@ -19,6 +19,8 @@ export class LoginComponent {
   private router = inject(Router);
   private toastr = inject(ToastrService);
 
+
+
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
 
@@ -27,8 +29,11 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.id);
+        localStorage.setItem('id', String(response.userId));
+        localStorage.setItem('email', credentials.email);
         this.toastr.success(`Bienvenu chez vous :)`);
         this.router.navigate([APP_ROUTES.cv]);
+        this.authService.isAuth.set(true);
       },
       error: (error) => {
         this.toastr.error('Veuillez vérifier vos credentials');

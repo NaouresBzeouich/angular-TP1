@@ -27,6 +27,7 @@ export class NavbarComponent {
 
   logout() {
     this.authService.logout();
+
     this.router.navigate([APP_ROUTES.login]);
     this.toastr.warning(`Au plaisir de vous revoir :(`);
   }
