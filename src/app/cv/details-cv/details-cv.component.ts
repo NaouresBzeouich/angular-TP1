@@ -21,6 +21,7 @@ export class DetailsCvComponent implements OnInit {
     public authService: AuthService
   ) {}
 
+
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
     this.cvService.getCvById(+id).subscribe({
