@@ -51,6 +51,7 @@ import { ProductsComponent } from "./products/products.component";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { AutocompleteComponent } from "./cv/autocomplete/autocomplete.component";
 import { SliderComponent } from "./rxjs/slider/slider.component";
+import {TTCCalculatorComponent} from "./components/ttccalculator/ttccalculator.component";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { SliderComponent } from "./rxjs/slider/slider.component";
     FirstComponent,
     SecondComponent,
     ColorComponent,
+    TTCCalculatorComponent,
     TwoComponent,
     CardProfilComponent,
     PereComponent,

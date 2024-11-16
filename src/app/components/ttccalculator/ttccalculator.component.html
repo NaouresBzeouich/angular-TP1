@@ -1,0 +1,25 @@
+<p>ttccalculator works!</p>
+
+<h2>
+  TTC Calculator
+</h2>
+
+<div>
+  <div style="display: flex; gap: 10px;">
+  <input type="number" id="quantite" [(ngModel)]="prixUnitaireHT" (input)="calculerTTC()" class="form-control flex-grow-1">
+  <input type="number" id="prixUnitaire" [(ngModel)]="quantite" (input)="calculerTTC()" class="form-control flex-grow-1">
+  <input type="number" id="tva" [(ngModel)]="tva" (input)="calculerTTC()" class="form-control flex-grow-1">
+</div>
+  <div style="display: flex; gap: 390px;">
+    <p> Prix HT</p>
+    <p>Quantité</p>
+    <p>TVA</p>
+  </div>
+
+  <div style="display: flex; gap: 5px;">
+    <div class="alert alert-primary flex-grow-1"> Prix Unitaire TTC : {{ prixunitaireTTC}}</div>
+    <div class="alert alert-success flex-grow-1"> Prix total TTC : {{prixTotalTTC}}</div>
+    <div class="alert alert-danger flex-grow-1"> Discount : {{discount}}</div>
+  </div>
+  <p>Prix TTC : {{ discount | currency:'EUR' }}</p>
+</div>
