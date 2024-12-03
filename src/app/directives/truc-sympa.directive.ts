@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostBinding, HostListener, Input } from '@angular/core';
 
 @Directive({
-  selector: 'input[TrucSympaDirective]'
+  selector: 'input[type="text"][TrucSympaDirective], input[type="number"][TrucSympaDirective], input[type="password"][TrucSympaDirective], input[type="email"][TrucSympaDirective], input[type="tel"][TrucSympaDirective], input[type="url"][TrucSympaDirective], textarea[TrucSympaDirective]'
 })
 export class TrucSympaDirective {
   colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'pink', 'purple', 'brown', 'gray', 'black', 'white'];
